@@ -1,20 +1,63 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# SME Invoice & Expense Manager
 
-# Run and deploy your AI Studio app
+A comprehensive tool for Malaysian SMEs to manage E-Invoices, track expenses via receipt scanning, and get AI-driven business insights.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/ae68986a-3e3b-4497-945e-8510362f1709
+- **AI E-Invoice Generation**: Scan handwritten notes or informal receipts to generate LHDN-compatible E-Invoices.
+- **Expense Tracking**: Photograph business receipts to automatically log expenses.
+- **Financial Reporting**: Visual charts for Sales by Category and Expense by Supplier.
+- **AI Business Advisor**: Chat with an AI that analyzes your business performance.
+- **Contact Management**: Manage Customers and Suppliers with their LHDN TIN details.
+- **LHDN Sandbox**: Test E-Invoice submissions to a simulated LHDN sandbox environment.
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+## Local Development Setup
 
+Follow these steps to run the application on your local machine.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 1. Prerequisites
+
+- **Node.js**: Version 18 or higher.
+- **npm**: Usually comes with Node.js.
+- **Gemini API Key**: Obtain a free API key from [Google AI Studio](https://aistudio.google.com/).
+
+### 2. Installation
+
+Clone the repository and install dependencies:
+
+```bash
+npm install
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the root directory and add your Gemini API key:
+
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+### 4. Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`.
+
+### 5. Project Structure
+
+- `server.ts`: Express backend with SQLite database logic.
+- `src/App.tsx`: Main React frontend application.
+- `src/types.ts`: TypeScript interfaces for transactions and contacts.
+- `sme_business.db`: Local SQLite database file (created on first run).
+
+---
+
+## Deployment
+
+For instructions on how to deploy this application to Google Cloud Run, please refer to [DEPLOYMENT.md](./DEPLOYMENT.md).

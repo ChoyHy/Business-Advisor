@@ -1,0 +1,23 @@
+{
+  "name": "SME Invoice & Expense Manager",
+  "short_name": "SME Manager",
+  "description": "Malaysian SME E-Invoice & Expense Management Tool",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f0",
+  "theme_color": "#141414",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/sme-icon/192/192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://picsum.photos/seed/sme-icon/512/512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
