@@ -36,6 +36,53 @@ db.exec(`
   );
 `);
 
+function seedDatabase() {
+  const contactCount = (db.prepare("SELECT COUNT(*) as count FROM contacts").get() as any).count;
+  if (contactCount === 0) {
+    console.log("Seeding sample data...");
+    
+    // Seed Contacts
+    const insertContact = db.prepare(
+      "INSERT INTO contacts (type, name, tin, email, phone, address) VALUES (?, ?, ?, ?, ?, ?)"
+    );
+    
+    const c1 = insertContact.run('customer', 'Ali Bin Ahmad', 'C1234567890', 'ali@example.com', '012-3456789', 'Kuala Lumpur').lastInsertRowid;
+    const c2 = insertContact.run('customer', 'Siti Nurhaliza', 'C9876543210', 'siti@example.com', '019-8765432', 'Selangor').lastInsertRowid;
+    const s1 = insertContact.run('supplier', 'Office Depot MY', 'S1122334455', 'sales@officedepot.my', '03-12345678', 'Petaling Jaya').lastInsertRowid;
+    const s2 = insertContact.run('supplier', 'TNB Berhad', 'S5544332211', 'billing@tnb.com.my', '1300-88-5454', 'Kuala Lumpur').lastInsertRowid;
+
+    // Seed Transactions
+    const insertTransaction = db.prepare(
+      "INSERT INTO transactions (type, amount, category, contact_id, description, date, metadata) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    );
+
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    const lastWeek = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
+    const twoWeeksAgo = new Date(Date.now() - 14 * 86400000).toISOString().split('T')[0];
+    const threeWeeksAgo = new Date(Date.now() - 21 * 86400000).toISOString().split('T')[0];
+
+    // Revenue
+    insertTransaction.run('income', 1500.00, 'Consulting', c1, 'Web Development Services', lastWeek, JSON.stringify({ invoiceNumber: 'INV-001' }));
+    insertTransaction.run('income', 2500.00, 'Sales', c2, 'Product Sales - Bundle A', yesterday, JSON.stringify({ invoiceNumber: 'INV-002' }));
+    insertTransaction.run('income', 4200.00, 'Consulting', c1, 'Cloud Migration Project', twoWeeksAgo, JSON.stringify({ invoiceNumber: 'INV-003' }));
+    insertTransaction.run('income', 850.00, 'Maintenance', c2, 'Monthly Server Maintenance', threeWeeksAgo, JSON.stringify({ invoiceNumber: 'INV-004' }));
+    insertTransaction.run('income', 3100.00, 'Sales', c1, 'Hardware Upgrade - Office Set', today, JSON.stringify({ invoiceNumber: 'INV-005' }));
+
+    // Expenses
+    insertTransaction.run('expense', 450.00, 'Utilities', s2, 'Electricity Bill - Feb 2026', yesterday, JSON.stringify({}));
+    insertTransaction.run('expense', 120.50, 'Office Supplies', s1, 'Stationery and Paper', today, JSON.stringify({}));
+    insertTransaction.run('expense', 2100.00, 'Rent', null, 'Office Rent - March 2026', threeWeeksAgo, JSON.stringify({}));
+    insertTransaction.run('expense', 350.00, 'Marketing', null, 'Social Media Ads - Campaign X', lastWeek, JSON.stringify({}));
+    insertTransaction.run('expense', 85.00, 'Travel', null, 'Grab - Client Meeting', yesterday, JSON.stringify({}));
+    insertTransaction.run('expense', 150.00, 'Utilities', null, 'Water Bill', twoWeeksAgo, JSON.stringify({}));
+    
+    console.log("Seeding complete.");
+  }
+}
+
+seedDatabase();
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
