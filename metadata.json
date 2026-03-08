@@ -1,0 +1,5 @@
+{
+  "name": "SME Invoice & Expense Manager",
+  "description": "A comprehensive tool for Malaysian SMEs to manage E-Invoices, track expenses via receipt scanning, and get AI-driven business insights.",
+  "requestFramePermissions": ["camera"]
+}
